@@ -3,7 +3,6 @@ package covid
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"gotest/internal/config"
 	"net/http"
 )
@@ -23,7 +22,6 @@ func InitCovidRepository(appConfig *config.AppConfig) Repo {
 }
 
 func (r repoImpl) GetCovidCase() (*CovidCase, error) {
-	fmt.Println("url", r.appConfig.CovidConfig.Covid_URL)
 	result, err := http.Get(r.appConfig.CovidConfig.Covid_URL)
 	if err != nil {
 		return nil, err
