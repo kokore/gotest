@@ -11,7 +11,7 @@ type Service struct {
 }
 
 func Init(appConfig *config.AppConfig, repos repository.Repositories) Service {
-	covidService := covid.InitCovidService(appConfig, repos.Covid)
+	covidService := covid.InitCovidService(repos.Covid)
 
 	return Service{
 		Covid: covidService,

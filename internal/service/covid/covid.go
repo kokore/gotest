@@ -1,12 +1,10 @@
 package covid
 
 import (
-	"gotest/internal/config"
 	"gotest/internal/repository/covid"
 )
 
 type serviceImpl struct {
-	appConfig       *config.AppConfig
 	covidRepository covid.Repo
 }
 
@@ -14,9 +12,8 @@ type Service interface {
 	GetCovidSummaryService() (*CovidSummary, error)
 }
 
-func InitCovidService(appConfig *config.AppConfig, covidRepository covid.Repo) Service {
+func InitCovidService(covidRepository covid.Repo) Service {
 	return &serviceImpl{
-		appConfig:       appConfig,
 		covidRepository: covidRepository,
 	}
 }
@@ -38,7 +35,7 @@ func (s serviceImpl) GetCovidSummaryService() (*CovidSummary, error) {
 
 	for _, record := range covidCase.Data {
 		provinceCount[record.Province]++
-		ageGroup := getAgeGroup(record.Age)
+		ageGroup := GetAgeGroup(record.Age)
 		ageGroupCount[ageGroup]++
 	}
 
@@ -50,7 +47,7 @@ func (s serviceImpl) GetCovidSummaryService() (*CovidSummary, error) {
 	return covidSum, nil
 }
 
-func getAgeGroup(age int) string {
+func GetAgeGroup(age int) string {
 	switch {
 	case age >= 0 && age <= 30:
 		return "0-30"
